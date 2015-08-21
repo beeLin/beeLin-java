@@ -1,0 +1,15 @@
+= beeLīn Java / JVM
+
+This is the start of a DNSChain client for the JVM. The client is currently written in Groovy, but will likely be converted to Java.
+
+== Install Prerequisites
+
+Make sure you have JDK 7 or later installed.
+
+== Build and run tests
+
+    ./gradlew build
+
+You can view the test results in `beelinj-lib/build/reports/tests/index.html`
+
+Of course you probably want to install https://www.jetbrains.com/idea/download/[IntelliJ IDEA] to do this.
