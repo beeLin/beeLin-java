@@ -20,10 +20,9 @@ public class DNSChainClient {
      * @param domain - .bit domain name (without the .bit suffix)
      * @return  JSON result from DNSChain server
      */
-    Object lookup(String domain) {
+    Object lookupNamecoin(String domain) {
         def keyVal = "d%2F${domain}"  // '%2F' is a slash
         def url = new URL("${dnsChainBase}/v1/namecoin/key/${keyVal}")
         return new JsonSlurper().parse(url)
     }
-
 }
