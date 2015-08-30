@@ -7,11 +7,12 @@ import groovy.transform.CompileStatic;
 /**
  * A bare-bones starting point for a JVM DNSChain client.
  *
- * Currently in Groovy, but we'll probably replace with a standard Java version.
+ * @deprecated Rewritten in Java using Retrofit. Use the Java version instead.
  *
  */
+@Deprecated
 @CompileStatic
-public class DNSChainClient {
+public class DNSChainGroovyClient {
     def dnsChainBase = "http://api.dnschain.net";
 
     /**

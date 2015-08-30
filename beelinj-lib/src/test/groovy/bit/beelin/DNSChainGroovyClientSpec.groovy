@@ -4,13 +4,13 @@ import spock.lang.Specification
 
 
 /**
- * Test Spec for DNSChainClient
+ * Test Spec for DNSChainGroovyClient
  */
-class DNSChainClientSpec extends Specification {
+class DNSChainGroovyClientSpec extends Specification {
 
     def "test lookup of okturtles"() {
         given:
-        def client = new DNSChainClient()
+        def client = new DNSChainGroovyClient()
 
         when:
         def json = client.lookupNamecoin("okturtles")
@@ -27,7 +27,7 @@ class DNSChainClientSpec extends Specification {
 
     def "test lookup of msgilligan"() {
         given:
-        def client = new DNSChainClient()
+        def client = new DNSChainGroovyClient()
 
         when:
         def json = client.lookupNamecoin("msgilligan")
