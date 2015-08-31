@@ -13,7 +13,7 @@ import groovy.transform.CompileStatic;
 @Deprecated
 @CompileStatic
 public class DNSChainGroovyClient {
-    def dnsChainBase = "http://api.dnschain.net";
+    def dnsChainBase = "https://api.dnschain.net";
 
     /**
      * Lookup a .bit domain using DNSChain
