@@ -13,3 +13,5 @@ Make sure you have JDK 7 or later installed.
 You can view the test results in `beelinj-lib/build/reports/tests/index.html`
 
 Of course you probably want to install https://www.jetbrains.com/idea/download/[IntelliJ IDEA] to do this.
+
+WARNING: **beeLin-java** is using HTTPS to query the DNSChain server at https://api.dnschain.net[api.dnschain.net] which uses a https://cert.startcom.org[StartCom] SSL certificate. By default, Java installations do not trust the StartCom certificate authority and your HTTPS connection to `api.dnschain.net` may fail. For more detail and instructions on how to install the StartCom certificate in your JDK/JRE see http://wernerstrydom.com/2014/01/14/installing-startcom-certificate-authority-certificates-java/[Installing StartCom Certificate Authority Certificates in Java].
