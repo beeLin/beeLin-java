@@ -30,7 +30,7 @@ public class Main extends Application {
         WebView webView = new WebView();
         bp.setCenter(webView);
         WebEngine engine = webView.getEngine();
-        engine.load("http://javafxports.org");
+        engine.load("https://okturtles.com");
         Worker loadWorker = engine.getLoadWorker();
         loadWorker.stateProperty().addListener(e -> {
             Worker.State state = loadWorker.getState();
