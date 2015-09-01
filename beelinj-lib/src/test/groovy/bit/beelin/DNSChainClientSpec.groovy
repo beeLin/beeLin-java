@@ -1,5 +1,6 @@
 package bit.beelin
 
+import spock.lang.Shared
 import spock.lang.Specification
 
 
@@ -8,10 +9,9 @@ import spock.lang.Specification
  */
 class DNSChainClientSpec extends Specification {
 
-    def "test lookup of okturtles"() {
-        given:
-        def client = new DNSChainClient()
+    @Shared DNSChainClient client
 
+    def "test lookup of okturtles"() {
         when:
         def json = client.lookupNamecoin("okturtles")
 
@@ -26,9 +26,6 @@ class DNSChainClientSpec extends Specification {
     }
 
     def "test lookup of msgilligan"() {
-        given:
-        def client = new DNSChainClient()
-
         when:
         def json = client.lookupNamecoin("msgilligan")
 
@@ -38,5 +35,9 @@ class DNSChainClientSpec extends Specification {
         json.header.datastore == "namecoin"
         json.data.name == "d/msgilligan"
         json.data.value.ip == "207.111.216.146"
+    }
+
+    def setup() {
+        client = new DNSChainClient()
     }
 }

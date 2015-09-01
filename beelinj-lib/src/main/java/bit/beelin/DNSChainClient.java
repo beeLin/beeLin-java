@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * Replaces the Groovy version.
  */
 public class DNSChainClient {
-    final String dnsChainBase = "https://api.dnschain.net";
+    static final String dnsChainBase = "https://api.dnschain.net";
     static final int CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s
     static final int READ_TIMEOUT_MILLIS = 20 * 1000; // 20s
     private DNSChainService dnsChainService;
@@ -48,12 +48,12 @@ public class DNSChainClient {
         client.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         client.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         client.setCertificatePinner(
-            new CertificatePinner.Builder()
-                    // Pinning for DNSChain API Server -- is this right?
-                    .add("api.dnschain.net", "sha1/OmfEeJ94QcdL+YrCl2bMp6Zh9LI=")
-                    .add("api.dnschain.net", "sha1/KqqJgAYLy9ogXOWETcR36ioKf20=")
-                    .build());
-        OkClient retroClient = new OkClient(client);
-        return retroClient;
+                new CertificatePinner.Builder()
+                        // Pinning for DNSChain API Server -- is this right?
+                        .add("api.dnschain.net", "sha1/OmfEeJ94QcdL+YrCl2bMp6Zh9LI=")
+                        .add("api.dnschain.net", "sha1/KqqJgAYLy9ogXOWETcR36ioKf20=")
+                        .build());
+        OkClient retrofitClient = new OkClient(client);
+        return retrofitClient;
     }
 }
