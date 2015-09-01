@@ -1,0 +1,10 @@
+apply plugin: 'base'
+apply plugin: 'org.javafxports.jfxmobile'
+
+mainClassName = "bit.beelin.browser.Main"
+
+jfxmobile {
+    ios {
+        forceLinkClasses = [ 'org.javafxports.**.*' ]
+    }
+}
