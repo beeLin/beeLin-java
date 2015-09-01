@@ -19,7 +19,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         BorderPane bp = new BorderPane();
-        TextField location = new TextField("http://javafxports.org");
+        TextField location = new TextField("https://okturtles.com");
         
         Button launch = new Button("go");
         HBox toolbar = new HBox(20, location, launch);
