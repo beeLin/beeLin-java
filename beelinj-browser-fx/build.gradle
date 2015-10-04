@@ -1,7 +1,16 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '1.2.1'
+}
+
 apply plugin: 'base'
 apply plugin: 'org.javafxports.jfxmobile'
 
 mainClassName = "bit.beelin.browser.Main"
+
+shadowJar {
+    baseName = 'beeLin'
+    classifier = ''
+}
 
 dependencies {
     compile project(':beelinj-lib')

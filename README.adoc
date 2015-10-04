@@ -20,4 +20,14 @@ Of course you probably want to install https://www.jetbrains.com/idea/download/[
 
     ./gradlew :beelinj-browser-fx:run
 
+== Build a self-contained JAR containing the browser
+
+    ./gradlew :beelinj-browser-fx:shadowJar
+
+To run the browser jar:
+
+    java -jar beelinj-browser-fx/build/libs/beeLin.jar
+
+
+
 
