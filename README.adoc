@@ -16,3 +16,8 @@ You can view the test results in `beelinj-lib/build/reports/tests/index.html`
 
 Of course you probably want to install https://www.jetbrains.com/idea/download/[IntelliJ IDEA] to do this.
 
+== Build and run the bare-bones browser
+
+    ./gradlew :beelinj-browser-fx:run
+
+
