@@ -1,6 +1,5 @@
 package bit.beelin.browser;
 
-import bit.beelin.DNSChainClient;
 import bit.beelin.PreResolver;
 import javafx.application.Application;
 import javafx.concurrent.Worker;

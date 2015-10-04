@@ -2,10 +2,11 @@ package bit.beelin;
 
 import com.squareup.okhttp.CertificatePinner;
 import com.squareup.okhttp.OkHttpClient;
-import retrofit.RestAdapter;
-import retrofit.client.OkClient;
+import retrofit.Call;
+import retrofit.Retrofit;
 import retrofit.http.GET;
 import retrofit.http.Path;
+import retrofit.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,8 +15,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * A bare-bones starting point for a JVM DNSChain client.
- * <p/>
- * Replaces the Groovy version.
  */
 public class DNSChainClient {
     static final String dnsChainBase = "https://api.dnschain.net";
@@ -25,23 +24,31 @@ public class DNSChainClient {
 
     interface DNSChainService {
         @GET("/v1/{chain}/key/{key}")
-        Map<String, Object> lookup(@Path("chain") String chain, @Path("key") String key);
+        Call<Map<String, Object>> lookup(@Path("chain") String chain, @Path("key") String key);
     }
 
     public DNSChainClient() {
-        OkClient client = initClient();
+        OkHttpClient client = initClient();
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setClient(client)
-                .setEndpoint(dnsChainBase)
+        Retrofit restAdapter = new Retrofit.Builder()
+                .client(client)
+                .baseUrl(dnsChainBase)
+                .addConverterFactory(JacksonConverterFactory.create())
                 .build();
+        //      .setLogLevel(Retrofit.LogLevel.FULL)    // Don't know how to do this in Retrofit 2.0
 
         dnsChainService = restAdapter.create(DNSChainService.class);
     }
 
     Map<String, Object>  lookupNamecoin(String domain) {
-        return dnsChainService.lookup("namecoin", "d/" + domain);
+        Map<String, Object> result = null;
+        try {
+            result = dnsChainService.lookup("namecoin", "d/" + domain).execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
     String resolveNamecoin(String hostname) {
@@ -60,7 +67,7 @@ public class DNSChainClient {
         return ipAddressString;
     }
 
-    private OkClient initClient() {
+    private OkHttpClient initClient() {
         OkHttpClient client = new OkHttpClient();
         client.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         client.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
@@ -70,7 +77,6 @@ public class DNSChainClient {
                         .add("api.dnschain.net", "sha1/OmfEeJ94QcdL+YrCl2bMp6Zh9LI=")
                         .add("api.dnschain.net", "sha1/KqqJgAYLy9ogXOWETcR36ioKf20=")
                         .build());
-        OkClient retrofitClient = new OkClient(client);
-        return retrofitClient;
+        return client;
     }
 }
