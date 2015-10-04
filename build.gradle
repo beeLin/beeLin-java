@@ -10,6 +10,9 @@ buildscript {
 }
 
 allprojects {
+    version = '0.0.1'
+    group = 'bit.beelin'
+
     repositories {
         jcenter()
     }
