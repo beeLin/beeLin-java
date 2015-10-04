@@ -1,5 +1,7 @@
 package bit.beelin.browser;
 
+import bit.beelin.DNSChainClient;
+import bit.beelin.PreResolver;
 import javafx.application.Application;
 import javafx.concurrent.Worker;
 import javafx.geometry.Pos;
@@ -15,11 +17,15 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+    private final String startPage = "http://okturtles.bit";
+    private final PreResolver resolver = new PreResolver();
     
     @Override
     public void start(Stage stage) {
         BorderPane bp = new BorderPane();
-        TextField location = new TextField("https://okturtles.com");
+        // Load text field with default text (the start page URL)
+        TextField location = new TextField(startPage);
         
         Button launch = new Button("go");
         HBox toolbar = new HBox(20, location, launch);
@@ -30,7 +36,7 @@ public class Main extends Application {
         WebView webView = new WebView();
         bp.setCenter(webView);
         WebEngine engine = webView.getEngine();
-        engine.load("https://okturtles.com");
+        engine.load(resolveLocation(startPage));
         Worker loadWorker = engine.getLoadWorker();
         loadWorker.stateProperty().addListener(e -> {
             Worker.State state = loadWorker.getState();
@@ -39,10 +45,11 @@ public class Main extends Application {
             } else {
                 launch.setDisable(false);
             }
-            System.out.println("new state for worker = " + loadWorker.getState());
+//            System.out.println("new state for worker = " + loadWorker.getState());
         });
         launch.setOnAction(e -> {
-            engine.load(location.getText());
+            String resolved = resolveLocation(location.getText());
+            engine.load(resolved);
             
         });
         
@@ -51,6 +58,17 @@ public class Main extends Application {
         
         stage.setScene(scene);
         stage.show();
+    }
+
+    /**
+     * Resolve input location into something standard that the WebEngine
+     * can handle.
+     *
+     * @param input The input location from the URL TextField
+     * @return A URL string that WebEngine (standard Java libs) can resolve.
+     */
+    String resolveLocation(String input) {
+        return resolver.resolve(input);
     }
     
 }

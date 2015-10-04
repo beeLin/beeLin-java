@@ -5,6 +5,7 @@ dependencies {
 //    compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.google.guava:guava:18.0'
     compile 'commons-codec:commons-codec:1.10'
 
     compile 'org.codehaus.groovy:groovy:2.4.4'

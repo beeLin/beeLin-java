@@ -1,3 +1,5 @@
+apply plugin: 'idea'
+
 buildscript {
     repositories {
         jcenter()
@@ -10,5 +12,12 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+    }
+}
+
+idea {
+    project {
+        jdkName = '1.8'
+        languageLevel = '1.8'
     }
 }

@@ -3,6 +3,10 @@ apply plugin: 'org.javafxports.jfxmobile'
 
 mainClassName = "bit.beelin.browser.Main"
 
+dependencies {
+    compile project(':beelinj-lib')
+}
+
 jfxmobile {
     ios {
         forceLinkClasses = [ 'org.javafxports.**.*' ]

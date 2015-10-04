@@ -8,6 +8,7 @@ import retrofit.http.GET;
 import retrofit.http.Path;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -24,7 +25,7 @@ public class DNSChainClient {
 
     interface DNSChainService {
         @GET("/v1/{chain}/key/{key}")
-        Map lookup(@Path("chain") String chain, @Path("key") String key);
+        Map<String, Object> lookup(@Path("chain") String chain, @Path("key") String key);
     }
 
     public DNSChainClient() {
@@ -39,8 +40,24 @@ public class DNSChainClient {
         dnsChainService = restAdapter.create(DNSChainService.class);
     }
 
-    Map lookupNamecoin(String domain) throws IOException {
+    Map<String, Object>  lookupNamecoin(String domain) {
         return dnsChainService.lookup("namecoin", "d/" + domain);
+    }
+
+    String resolveNamecoin(String hostname) {
+        String ipAddressString;
+        Map<String, Object> result = lookupNamecoin(hostname);
+        Map<String, Object> data = (Map<String, Object>) result.get("data");
+        Map<String, Object> value = (Map<String, Object>) data.get("value");
+        Object ip = value.get("ip");
+        if (ip instanceof String) {
+            ipAddressString = (String) ip;
+        } else if (ip instanceof List) {
+            ipAddressString = (String) ((List) ip).get(0);
+        } else {
+            ipAddressString = "unknown type in JSON";
+        }
+        return ipAddressString;
     }
 
     private OkClient initClient() {
