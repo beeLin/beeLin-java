@@ -1,6 +1,5 @@
 package bit.beelin.browser;
 
-import bit.beelin.PreResolver;
 import javafx.application.Application;
 import javafx.concurrent.Worker;
 import javafx.geometry.Pos;
@@ -18,8 +17,14 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     private final String startPage = "http://okturtles.bit";
-    private final PreResolver resolver = new PreResolver();
-    
+
+    @Override
+    public void init() {
+        // Configure Java to first search our Namecoin NameService provider, then fall back to the default
+        System.setProperty("sun.net.spi.nameservice.provider.1", "namecoin,beelin");
+        System.setProperty("sun.net.spi.nameservice.provider.2", "default");
+    }
+
     @Override
     public void start(Stage stage) {
         BorderPane bp = new BorderPane();
@@ -35,7 +40,7 @@ public class Main extends Application {
         WebView webView = new WebView();
         bp.setCenter(webView);
         WebEngine engine = webView.getEngine();
-        engine.load(resolveLocation(startPage));
+        engine.load(startPage);
         Worker loadWorker = engine.getLoadWorker();
         loadWorker.stateProperty().addListener(e -> {
             Worker.State state = loadWorker.getState();
@@ -67,7 +72,7 @@ public class Main extends Application {
      * @return A URL string that WebEngine (standard Java libs) can resolve.
      */
     String resolveLocation(String input) {
-        return resolver.resolve(input);
+        return input;   // No-op since we now have a Java NameService implementation
     }
     
 }

@@ -37,12 +37,21 @@ class DNSChainClientSpec extends Specification {
         json.data.value.ip == "207.111.216.146"
     }
 
+    def "test lookup of unknown host"() {
+        when:
+        def json = client.lookupNamecoin("hostabcddef")
+
+        then:
+        UnknownHostException e = thrown()
+    }
+
     def "test resolve of okturtles"() {
         when:
         def ip = client.resolveNamecoin("okturtles")
 
         then:
-        ip == "192.184.93.146"
+        ip.length == 1
+        ip[0] == InetAddress.getByName("192.184.93.146")
     }
 
     def "test resolve of msgilligan"() {
@@ -50,7 +59,8 @@ class DNSChainClientSpec extends Specification {
         def ip = client.resolveNamecoin("msgilligan")
 
         then:
-        ip == "207.111.216.146"
+        ip.length == 1
+        ip[0] == InetAddress.getByName("207.111.216.146")
     }
 
     def setup() {

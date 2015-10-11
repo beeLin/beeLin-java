@@ -3,12 +3,16 @@ package bit.beelin;
 import com.squareup.okhttp.CertificatePinner;
 import com.squareup.okhttp.OkHttpClient;
 import retrofit.Call;
+import retrofit.Response;
 import retrofit.Retrofit;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import retrofit.JacksonConverterFactory;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -40,31 +44,49 @@ public class DNSChainClient {
         dnsChainService = restAdapter.create(DNSChainService.class);
     }
 
-    Map<String, Object>  lookupNamecoin(String domain) {
+    Map<String, Object>  lookupNamecoin(String domain) throws UnknownHostException {
+        Response<Map<String, Object>> response;
         Map<String, Object> result = null;
         try {
-            result = dnsChainService.lookup("namecoin", "d/" + domain).execute().body();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            response = dnsChainService.lookup("namecoin", "d/" + domain).execute();
+            int code = response.code();
+            if (code == 404) {
+                throw new UnknownHostException(domain);
+            } else if (code != 200) {
+                throw new RuntimeException("DNSChain lookup returned HTTP Error: " + code);
+            }
+            result = response.body();
+        } catch (UnknownHostException uhe) {
+            throw uhe; // Don't let our catch of IOException stop us from throwing UnknownHostException
+        } catch (IOException ioe) {
+            // Maybe we should remove the try/catch altogether and add IOException to our method signature
+            ioe.printStackTrace();
+            throw new RuntimeException(ioe);
         }
         return result;
     }
 
-    String resolveNamecoin(String hostname) {
-        String ipAddressString;
+    InetAddress[] resolveNamecoin(String hostname) throws UnknownHostException {
+        List<InetAddress> addresses = new ArrayList<>(1);
         Map<String, Object> result = lookupNamecoin(hostname);
         Map<String, Object> data = (Map<String, Object>) result.get("data");
         Map<String, Object> value = (Map<String, Object>) data.get("value");
         Object ip = value.get("ip");
-        if (ip instanceof String) {
-            ipAddressString = (String) ip;
-        } else if (ip instanceof List) {
-            ipAddressString = (String) ((List) ip).get(0);
-        } else {
-            ipAddressString = "unknown type in JSON";
+        try {
+            if (ip instanceof String) {
+                addresses.add(InetAddress.getByName((String) ip));
+            } else if (ip instanceof List) {
+                for (String addr : (List<String>) ip) {
+                    addresses.add(InetAddress.getByName(addr));
+                }
+            } else {
+                throw new RuntimeException("unknown type in JSON");
+            }
+        } catch (UnknownHostException e) {
+            // Should never happen since we're only using already resolved IP address literal
+            throw new RuntimeException(e);
         }
-        return ipAddressString;
+        return addresses.toArray(new InetAddress[addresses.size()]);
     }
 
     private OkHttpClient initClient() {
