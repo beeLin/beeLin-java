@@ -23,8 +23,6 @@ import java.util.List;
  * See http://docs.oracle.com/javase/7/docs/technotes/guides/net/properties.html and
  * http://rkuzmik.blogspot.ca/2006/08/local-managed-dns-java_11.html
  *
- * @author Sean Gilligan
- *
  */
 public class DNSChainNameService implements NameService {
     private DNSChainClient dnsChainClient = new DNSChainClient();

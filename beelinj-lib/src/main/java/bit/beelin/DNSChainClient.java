@@ -79,8 +79,10 @@ public class DNSChainClient {
                 for (String addr : (List<String>) ip) {
                     addresses.add(InetAddress.getByName(addr));
                 }
+            } else if (ip == null) {
+                throw new RuntimeException("'data.value.ip' is null in JSON result");
             } else {
-                throw new RuntimeException("unknown type in JSON");
+                throw new RuntimeException("'data.value.ip' is unknown type in JSON result");
             }
         } catch (UnknownHostException e) {
             // Should never happen since we're only using already resolved IP address literal

@@ -37,6 +37,18 @@ class DNSChainClientSpec extends Specification {
         json.data.value.ip == "207.111.216.146"
     }
 
+    def "test lookup of namecoin"() {
+        when:
+        def json = client.lookupNamecoin("namecoin")
+
+        then:
+        json != null;
+        json.version == "0.0.1"
+        json.header.datastore == "namecoin"
+        json.data.name == "d/namecoin"
+        json.data.value.ip == null
+    }
+
     def "test lookup of unknown host"() {
         when:
         def json = client.lookupNamecoin("hostabcddef")
@@ -61,6 +73,15 @@ class DNSChainClientSpec extends Specification {
         then:
         ip.length == 1
         ip[0] == InetAddress.getByName("207.111.216.146")
+    }
+
+    def "test resolve of namecoin"() {
+        when:
+        def ip = client.resolveNamecoin("namecoin")
+
+        then:
+        RuntimeException e = thrown()
+        e.message == "'data.value.ip' is null in JSON result"
     }
 
     def setup() {
