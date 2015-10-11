@@ -40,8 +40,14 @@ public class DNSChainNameService implements NameService {
             throw new UnknownHostException();
         }
         List<String> parts = idn.parts();
+
+        if (parts.size() < 2) {
+            throw new UnknownHostException();
+        }
+
         // For now assume only 2 parts.
-        return dnsChainClient.resolveNamecoin(parts.get(0));
+        String domain = parts.get(parts.size() - 2);
+        return dnsChainClient.resolveNamecoin(domain);
     }
 
     /**
