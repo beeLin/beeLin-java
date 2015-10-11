@@ -1,5 +1,3 @@
-apply plugin: 'idea'
-
 buildscript {
     repositories {
         jcenter()
@@ -9,12 +7,26 @@ buildscript {
     }
 }
 
+apply plugin: 'idea'
+
 allprojects {
     version = '0.0.2-SNAPSHOT'
     group = 'bit.beelin'
 
     repositories {
         jcenter()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+
+    dependencies {
+        testCompile 'org.codehaus.groovy:groovy:2.4.4'
+        testCompile("org.spockframework:spock-core:1.0-groovy-2.4") {
+            exclude module: "groovy-all"
+        }
     }
 }
 

@@ -3,7 +3,6 @@ plugins {
     id "edu.sc.seis.macAppBundle" version "2.1.1"
 }
 
-apply plugin: 'base'
 apply plugin: 'org.javafxports.jfxmobile'
 
 mainClassName = "bit.beelin.browser.Main"
@@ -15,6 +14,14 @@ shadowJar {
 
 dependencies {
     compile project(':beelinj-lib')
+}
+
+test {
+    // NOTE: You'll need to manually set these properties in your IDEA Run/Debug configuration VM options
+    // if you want to run the tests directly from the IDE
+    systemProperties ([ 'sun.net.spi.nameservice.provider.1': 'namecoin,beelin',
+                        'sun.net.spi.nameservice.provider.2': 'default',
+    ])
 }
 
 macAppBundle {
@@ -29,5 +36,11 @@ macAppBundle {
 jfxmobile {
     ios {
         forceLinkClasses = [ 'org.javafxports.**.*' ]
+    }
+}
+
+idea {
+    module {
+        jdkName = '1.8'
     }
 }
