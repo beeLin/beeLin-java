@@ -1,0 +1,56 @@
+= beeLin-Java Changes
+:homepage: https://github.com/beeLin/beeLin-java
+
+A high-level view of the changes in each beeLīn-Java binary release.
+
+== Release v0.0.2
+
+Released: 2015.10.11
+
+=== Core Functionality
+
+==== Features/Changes
+
+* beeLīn Java NameService implementation. This fixes several issues:
+** The browser now correctly sends an HTTP `Host` header with the request allowing `.bit` domains to be resolved correctly
+on sites using name-based virtual hosting.
+** The browser should also be able to load full URLs to `.bit` domains from within
+the context of existing pages.
+* Resolves more types of `.bit` domains correctly.
+
+==== Known Issues
+
+* Binary release is for Mac OS X only. For Windows and Linux building from source is a single command.
+* Not all variants of Namecoin JSON DNS records are parsed correctly.
+* Subdomains are not handled correctly.  Currently only resolves two-level domain names, like `okturtles.bit` and `blockstream.bit`.
+* DNSChain server used is hard-coded to `https://api.dnschain.net`.
+
+=== beeLīn JavaFX Browser
+
+In release v0.0.2 the browser has no direct references to the beeLīn Java library
+but accesses `.bit` name resolution entirely through standard Java libraries.
+
+==== Known Issues
+
+* The *go* button must be clicked to load a URL
+* URLs must be complete URLs starting with `http://` or `https://`
+
+=== beeLīn Java Library
+
+==== Features/Changes
+
+* Implements Java NameService SPI so that any app using standard Java networking (e.g. `InetAddress.getByName()`)
+can resolve `.bit` URLs transparently. Requires configuration via System properties as shown below:
+
+[source,java]
+----
+    System.setProperty("sun.net.spi.nameservice.provider.1", "namecoin,beelin");
+    System.setProperty("sun.net.spi.nameservice.provider.2", "default");
+----
+
+
+== Release v0.0.1
+
+Released: 2015.10.04
+
+First release. Binary for Mac OS X only.

@@ -1,0 +1,28 @@
+= beeLīn-Java Release Process
+
+== Main Release Process
+
+. Update `CHANGELOG.adoc`
+. Set versions
+.. `build.gradle`
+. Commit version bump and changelog.
+. Tag: `git tag -a v0.x.y -m "Release 0.x.y"`
+. Push: `git push --tags origin master`
+. Full build, test
+.. `./gradlew clean build`
+. Publish to Bintray:
+.. Currently a manual upload
+.. Confirm publish of artifacts in Bintray Web UI.
+
+== Announcements
+
+. Not yet.
+
+== After release
+
+. Set version back to -SNAPSHOT
+.. `build.gradle`
+. Commit and push to master
+
+
+

@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'idea'
 
 allprojects {
-    version = '0.0.2-SNAPSHOT'
+    version = '0.0.2'
     group = 'bit.beelin'
 
     repositories {
