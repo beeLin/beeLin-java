@@ -2,11 +2,25 @@
 
 This is the start of a DNSChain client for the JVM.
 
-== Install Prerequisites
+== Download and Install Prerequisites
 
-Make sure you have JDK 7 or later installed.
+[options="header",frame="all"]
+|===
+| | Mac OS X | Windows | Linux
 
-WARNING: **beeLin-java** is using HTTPS to query the DNSChain server at https://api.dnschain.net[api.dnschain.net] which uses a https://cert.startcom.org[StartCom] SSL certificate. By default, Java installations do not trust the StartCom certificate authority and your HTTPS connection to `api.dnschain.net` may fail. For more detail and instructions on how to install the StartCom certificate in your JDK/JRE see http://wernerstrydom.com/2014/01/14/installing-startcom-certificate-authority-certificates-java/[Installing StartCom Certificate Authority Certificates in Java].
+| Prerequisites
+| None - Java 8 is bundled inside the App. (Recent Mac OS X?)
+| Java 8 w/StartCom certificate installed
+| Java 8 w/StartCom certificate installed
+
+| Binary download
+| image:https://api.bintray.com/packages/beelin/beeLin-Releases/beeLin-java/images/download.svg[link="https://bintray.com/beelin/beeLin-Releases/beeLin-java/_latestVersion"]
+| N/A - build from source is relatively easy, see below.
+| N/A - build from source is relatively easy, see below.
+
+|===
+
+NOTE: **beeLin-java** is using HTTPS to query the DNSChain server at https://api.dnschain.net[api.dnschain.net] which uses a https://cert.startcom.org[StartCom] SSL certificate. By default, Java installations do not trust the StartCom certificate authority and your HTTPS connection to `api.dnschain.net` may fail. For more detail and instructions on how to install the StartCom certificate in your JDK/JRE see http://wernerstrydom.com/2014/01/14/installing-startcom-certificate-authority-certificates-java/[Installing StartCom Certificate Authority Certificates in Java].
 
 == Build and run tests
 
