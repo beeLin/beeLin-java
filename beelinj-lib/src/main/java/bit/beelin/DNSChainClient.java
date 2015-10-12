@@ -71,6 +71,10 @@ public class DNSChainClient {
         Map<String, Object> result = lookupNamecoin(hostname);
         Map<String, Object> data = (Map<String, Object>) result.get("data");
         Map<String, Object> value = (Map<String, Object>) data.get("value");
+        Object alias = value.get("alias");
+        if (alias instanceof String) {
+            return InetAddress.getAllByName((String) alias);
+        }
         Object ip = value.get("ip");
         try {
             if (ip instanceof String) {
