@@ -28,7 +28,8 @@ macAppBundle {
     appName = "beeLīn"
     mainClassName = "bit.beelin.browser.Main"
     icon = "src/macos/icons/app-icon.icns"
-    bundleJRE = true
+    // For now, only bundle the JRE if building under Mac OS X
+    bundleJRE = System.getProperty("os.name").toLowerCase().contains("mac os")
 //    javaProperties.put("apple.laf.useScreenMenuBar", "true")
 //    backgroundImage = "doc/macbackground.png"
 }
