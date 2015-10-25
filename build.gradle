@@ -30,6 +30,8 @@ subprojects {
     }
 }
 
+apply from: 'gradle/bintray.gradle'
+
 idea {
     project {
         jdkName = '1.8'
