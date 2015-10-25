@@ -49,6 +49,19 @@ class DNSChainClientSpec extends Specification {
         json.data.value.ip == null
     }
 
+    def "test lookup of genevieveprimavera"() {
+        when:
+        def json = client.lookupNamecoin("genevieveprimavera")
+
+        then:
+        json != null;
+        json.version == "0.0.1"
+        json.header.datastore == "namecoin"
+        json.data.name == "d/genevieveprimavera"
+        json.data.value.ip == null
+        json.data.value.alias == "genevieveprimavera.com."
+    }
+
     def "test lookup of unknown host"() {
         when:
         def json = client.lookupNamecoin("hostabcddef")

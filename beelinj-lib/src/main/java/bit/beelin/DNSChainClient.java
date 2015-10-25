@@ -72,7 +72,8 @@ public class DNSChainClient {
         Map<String, Object> data = (Map<String, Object>) result.get("data");
         Map<String, Object> value = (Map<String, Object>) data.get("value");
         Object alias = value.get("alias");
-        if (alias instanceof String) {
+        if ((alias instanceof String) && ((String) alias).endsWith(".")) {
+            // If there's an alias to an absolute domain, use it to get InetAddress[]
             return InetAddress.getAllByName((String) alias);
         }
         Object ip = value.get("ip");
