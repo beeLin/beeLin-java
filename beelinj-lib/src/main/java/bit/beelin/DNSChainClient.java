@@ -44,7 +44,7 @@ public class DNSChainClient {
         dnsChainService = restAdapter.create(DNSChainService.class);
     }
 
-    Map<String, Object>  lookupNamecoin(String domain) throws UnknownHostException {
+    public Map<String, Object>  lookupNamecoin(String domain) throws UnknownHostException {
         Response<Map<String, Object>> response;
         Map<String, Object> result = null;
         try {
@@ -66,7 +66,7 @@ public class DNSChainClient {
         return result;
     }
 
-    InetAddress[] resolveNamecoin(String hostname) throws UnknownHostException {
+    public InetAddress[] resolveNamecoin(String hostname) throws UnknownHostException {
         List<InetAddress> addresses = new ArrayList<>(1);
         Map<String, Object> result = lookupNamecoin(hostname);
         Map<String, Object> data = (Map<String, Object>) result.get("data");
