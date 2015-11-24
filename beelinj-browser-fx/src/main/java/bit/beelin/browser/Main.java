@@ -21,7 +21,9 @@ public class Main extends Application {
     @Override
     public void init() {
         // Configure Java to first search our Namecoin NameService provider, then fall back to the default
-        System.setProperty("sun.net.spi.nameservice.provider.1", "namecoin,beelin");
+        // TODO: Add a preference setting to switch between DNSChain and Namecoin RPC for lookup
+        System.setProperty("sun.net.spi.nameservice.provider.1", "namecoin-dnschain,beelin");
+//        System.setProperty("sun.net.spi.nameservice.provider.1", "namecoin-rpc,beelin");
         System.setProperty("sun.net.spi.nameservice.provider.2", "default");
     }
 

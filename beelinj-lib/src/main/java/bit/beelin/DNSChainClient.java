@@ -12,8 +12,6 @@ import retrofit.JacksonConverterFactory;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -67,33 +65,14 @@ public class DNSChainClient {
     }
 
     public InetAddress[] resolveNamecoin(String hostname) throws UnknownHostException {
-        List<InetAddress> addresses = new ArrayList<>(1);
         Map<String, Object> result = lookupNamecoin(hostname);
         Map<String, Object> data = (Map<String, Object>) result.get("data");
-        Map<String, Object> value = (Map<String, Object>) data.get("value");
-        Object alias = value.get("alias");
-        if ((alias instanceof String) && ((String) alias).endsWith(".")) {
-            // If there's an alias to an absolute domain, use it to get InetAddress[]
-            return InetAddress.getAllByName((String) alias);
+        Map<String, Object> valueMap = (Map<String, Object>) data.get("value");
+        if (valueMap == null) {
+            System.out.println("shouldn't happen");
         }
-        Object ip = value.get("ip");
-        try {
-            if (ip instanceof String) {
-                addresses.add(InetAddress.getByName((String) ip));
-            } else if (ip instanceof List) {
-                for (String addr : (List<String>) ip) {
-                    addresses.add(InetAddress.getByName(addr));
-                }
-            } else if (ip == null) {
-                throw new RuntimeException("'data.value.ip' is null in JSON result");
-            } else {
-                throw new RuntimeException("'data.value.ip' is unknown type in JSON result");
-            }
-        } catch (UnknownHostException e) {
-            // Should never happen since we're only using already resolved IP address literal
-            throw new RuntimeException(e);
-        }
-        return addresses.toArray(new InetAddress[addresses.size()]);
+        NamecoinValue value = new NamecoinValue(valueMap);
+        return value.getAddresses();
     }
 
     private OkHttpClient initClient() {

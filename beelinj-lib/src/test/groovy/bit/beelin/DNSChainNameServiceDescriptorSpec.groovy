@@ -21,7 +21,7 @@ class DNSChainNameServiceDescriptorSpec extends Specification {
 
     def "name and provider are correct"() {
         expect:
-        descriptor.getType() == "namecoin"
+        descriptor.getType() == "namecoin-dnschain"
         descriptor.getProviderName() == "beelin"
     }
 

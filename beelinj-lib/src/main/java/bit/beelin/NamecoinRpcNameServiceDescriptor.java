@@ -4,10 +4,10 @@ import sun.net.spi.nameservice.NameService;
 import sun.net.spi.nameservice.NameServiceDescriptor;
 
 /**
- * The descriptor class for DNSChainNameService
+ * The descriptor class for NamecoinRPCNameService
  */
-public class DNSChainNameServiceDescriptor implements NameServiceDescriptor {
-    private static NameService nameService = new DNSChainNameService();
+public class NamecoinRpcNameServiceDescriptor implements NameServiceDescriptor {
+    private static NameService nameService = new NamecoinRpcNameService();
 
     @Override
     public NameService createNameService() throws Exception {
@@ -21,6 +21,6 @@ public class DNSChainNameServiceDescriptor implements NameServiceDescriptor {
 
     @Override
     public String getType() {
-        return "namecoin-dnschain";
+        return "namecoin-rpc";
     }
 }
