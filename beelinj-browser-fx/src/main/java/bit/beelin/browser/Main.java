@@ -13,13 +13,18 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main extends Application {
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     private final String startPage = "http://okturtles.bit";
 
     @Override
     public void init() {
+        log.info("init()");
+
         // Configure Java to first search our Namecoin NameService provider, then fall back to the default
         // TODO: Add a preference setting to switch between DNSChain and Namecoin RPC for lookup
         System.setProperty("sun.net.spi.nameservice.provider.1", "namecoin-dnschain,beelin");
@@ -29,6 +34,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
+        log.info("start()");
         BorderPane bp = new BorderPane();
         // Load text field with default text (the start page URL)
         TextField location = new TextField(startPage);
@@ -74,6 +80,7 @@ public class Main extends Application {
      * @return A URL string that WebEngine (standard Java libs) can resolve.
      */
     String resolveLocation(String input) {
+        log.info("resolveLocation() -> " + input);
         return input;   // No-op since we now have a Java NameService implementation
     }
     

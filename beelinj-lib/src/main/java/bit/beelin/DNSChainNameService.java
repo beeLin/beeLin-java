@@ -1,6 +1,8 @@
 package bit.beelin;
 
 import com.google.common.net.InternetDomainName;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.net.spi.nameservice.NameService;
 
 import java.net.InetAddress;
@@ -25,10 +27,13 @@ import java.util.List;
  *
  */
 public class DNSChainNameService extends NamecoinNameService {
+    private static final Logger log = LoggerFactory.getLogger(DNSChainNameService.class);
     private DNSChainClient dnsChainClient = new DNSChainClient();
 
     @Override
     protected InetAddress[] resolveNamecoin(String domain) throws UnknownHostException {
-        return dnsChainClient.resolveNamecoin(domain);
+        InetAddress[] addresses = dnsChainClient.resolveNamecoin(domain);
+        log.info("resolveNamecoin({}) -> {}", domain, addresses);
+        return addresses;
     }
 }

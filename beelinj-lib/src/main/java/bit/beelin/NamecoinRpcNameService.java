@@ -6,6 +6,8 @@ import com.msgilligan.namecoinj.json.pojo.NameData;
 import com.msgilligan.namecoinj.rpc.NamecoinClient;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.params.MainNetParams;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -31,6 +33,7 @@ import java.util.Map;
  *
  */
 public class NamecoinRpcNameService extends NamecoinNameService {
+    private static final Logger log = LoggerFactory.getLogger(DNSChainNameService.class);
     public static String rpcName = "msgnmc";
     public static String rpcPassword = "msgnmc2015";
     private NamecoinClient namecoinClient;
@@ -57,6 +60,8 @@ public class NamecoinRpcNameService extends NamecoinNameService {
             e.printStackTrace();
         }
         NamecoinValue data = new NamecoinValue(result.getValue());
+        InetAddress[] addresses = data.getAddresses();
+        log.info("resolveNamecoin({}) -> {}", domain, addresses);
         return data.getAddresses();
     }
 }
