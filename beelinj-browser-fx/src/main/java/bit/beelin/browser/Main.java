@@ -48,6 +48,9 @@ public class Main extends Application {
         WebView webView = new WebView();
         bp.setCenter(webView);
         WebEngine engine = webView.getEngine();
+        engine.setOnError(e -> {
+            log.info("Error: {}", e.getMessage());
+        });
         engine.load(startPage);
         Worker loadWorker = engine.getLoadWorker();
         loadWorker.stateProperty().addListener(e -> {
@@ -57,7 +60,7 @@ public class Main extends Application {
             } else {
                 launch.setDisable(false);
             }
-//            System.out.println("new state for worker = " + loadWorker.getState());
+          log.info("new state for worker = {}", loadWorker.getState());
         });
         launch.setOnAction(e -> {
             String resolved = resolveLocation(location.getText());
