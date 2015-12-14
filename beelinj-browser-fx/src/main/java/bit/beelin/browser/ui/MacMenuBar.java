@@ -1,6 +1,8 @@
 package bit.beelin.browser.ui;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -14,6 +16,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.io.IOException;
 
 /**
  *
@@ -75,15 +79,21 @@ public class MacMenuBar {
     }
 
     public void aboutHandler(ActionEvent event) {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("about.fxml"));
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
         Stage stage = new Stage(StageStyle.UNDECORATED);
-        stage.setWidth(300);
-        stage.setHeight(300);
+        stage.setWidth(600);
+        stage.setHeight(400);
         stage.setResizable(false);
 
-        Text text = new Text(10, 40, "About beeLīn");
-        text.setFont(new Font(40));
-        Scene scene = new Scene(new BorderPane(text));
-        scene.setFill(Color.AQUA);
+        Scene scene = new Scene(root, 600, 400);
         scene.setOnMousePressed(mouseEvent -> {
             stage.close();
         });

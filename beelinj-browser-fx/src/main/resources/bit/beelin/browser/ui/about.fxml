@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<Pane maxHeight="-Infinity" maxWidth="600" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="319.0" layoutY="137.0" lineSpacing="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="An experimental web browser that aims to resist censorship and surveillance." wrappingWidth="205.6829252243042">
+         <font>
+            <Font name="Avenir Light" size="18.0" />
+         </font>
+      </Text>
+      <Hyperlink layoutX="313.0" layoutY="241.0" text="https://github.com/beelin" />
+      <ImageView fitHeight="159.0" fitWidth="231.0" layoutX="62.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@beeLin_logo_442x250.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="178.0" layoutY="220.0" lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version 0.0.2" textAlignment="RIGHT" wrappingWidth="109.6829252243042">
+         <font>
+            <Font name="Avenir Light" size="13.0" />
+         </font>
+      </Text>
+      <Text fill="#383838" layoutX="73.0" layoutY="369.0" lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copyright 2015 Genevieve Primavera and Sean Giligan" textAlignment="CENTER" wrappingWidth="467.6829252243042">
+         <font>
+            <Font name="Avenir Light" size="11.0" />
+         </font>
+      </Text>
+   </children>
+</Pane>
