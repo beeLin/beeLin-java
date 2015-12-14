@@ -14,6 +14,8 @@ shadowJar {
 
 dependencies {
     compile project(':beelinj-lib')
+
+    compile 'de.codecentric.centerdevice:centerdevice-nsmenufx:2.0.0'
 }
 
 test {

@@ -1,5 +1,6 @@
 package bit.beelin.browser;
 
+import bit.beelin.browser.ui.MacMenuBar;
 import javafx.application.Application;
 import javafx.concurrent.Worker;
 import javafx.geometry.Pos;
@@ -19,7 +20,14 @@ import org.slf4j.LoggerFactory;
 public class Main extends Application {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
 
-    private final String startPage = "http://okturtles.bit";
+    private static final String appName = "beeLīn";
+    private static final String startPage = "http://okturtles.bit";
+
+    private MacMenuBar macMenuBar;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void init() {
@@ -72,7 +80,10 @@ public class Main extends Application {
         Scene scene = new Scene(bp, visualBounds.getWidth(), visualBounds.getHeight());
         
         stage.setScene(scene);
+        stage.setTitle(appName);
         stage.show();
+
+        macMenuBar = new MacMenuBar(appName);
     }
 
     /**
