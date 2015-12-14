@@ -1,11 +1,19 @@
 package bit.beelin.browser.ui;
 
+import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
 import de.codecentric.centerdevice.MenuToolkit;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -25,7 +33,8 @@ public class MacMenuBar {
         // TBD: services menu
         Menu appMenu = new Menu(appName); // Name for appMenu can't be set at
         // Runtime
-        MenuItem aboutItem = new MenuItem("About");
+        MenuItem aboutItem = new MenuItem("About " + appName);
+        aboutItem.setOnAction(this::aboutHandler);
         MenuItem prefsItem = new MenuItem("Preferences...");
         appMenu.getItems().addAll(aboutItem, new SeparatorMenuItem(), prefsItem, new SeparatorMenuItem(),
                 tk.createHideMenuItem(appName), tk.createHideOthersMenuItem(), tk.createUnhideAllMenuItem(),
@@ -64,4 +73,23 @@ public class MacMenuBar {
         tk.autoAddWindowMenuItems(windowMenu);
         tk.setGlobalMenuBar(bar);
     }
+
+    public void aboutHandler(ActionEvent event) {
+        Stage stage = new Stage(StageStyle.UNDECORATED);
+        stage.setWidth(300);
+        stage.setHeight(300);
+        stage.setResizable(false);
+
+        Text text = new Text(10, 40, "About beeLīn");
+        text.setFont(new Font(40));
+        Scene scene = new Scene(new BorderPane(text));
+        scene.setFill(Color.AQUA);
+        scene.setOnMousePressed(mouseEvent -> {
+            stage.close();
+        });
+
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }
