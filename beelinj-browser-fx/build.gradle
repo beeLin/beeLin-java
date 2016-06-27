@@ -21,7 +21,7 @@ dependencies {
 test {
     // NOTE: You'll need to manually set these properties in your IDEA Run/Debug configuration VM options
     // if you want to run the tests directly from the IDE
-    systemProperties ([ 'sun.net.spi.nameservice.provider.1': 'namecoin,beelin',
+    systemProperties ([ 'sun.net.spi.nameservice.provider.1': 'beelin-switchable,beelin',
                         'sun.net.spi.nameservice.provider.2': 'default',
     ])
 }
@@ -32,7 +32,9 @@ macAppBundle {
     icon = "src/macos/icons/app-icon.icns"
     // For now, only bundle the JRE if building under Mac OS X
     bundleJRE = System.getProperty("os.name").toLowerCase().contains("mac os")
-//    javaProperties.put("apple.laf.useScreenMenuBar", "true")
+//    javaProperties.put("sun.net.spi.nameservice.provider.1", "\"namecoin-dnschain,beelin\"");
+    javaProperties.put("sun.net.spi.nameservice.provider.1", "\"beelin-switchable,beelin\"");
+    javaProperties.put("sun.net.spi.nameservice.provider.2", "\"default\"");
 //    backgroundImage = "doc/macbackground.png"
 }
 

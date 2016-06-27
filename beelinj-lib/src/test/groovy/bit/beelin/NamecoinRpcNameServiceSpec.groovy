@@ -11,11 +11,11 @@ class NamecoinRpcNameServiceSpec extends Specification {
 
     def "can lookup .bit hostnames"() {
         when:
-        InetAddress[] ip = service.lookupAllHostAddr("okturtles.bit")
+        InetAddress[] ip = service.lookupAllHostAddr("msgilligan.bit")
 
         then:
         ip.length == 1
-        ip[0] == InetAddress.getByName("192.184.93.146")
+        ip[0] == InetAddress.getByName("207.111.216.146")
     }
 
     def "throws exception when not a .bit domain, passing responsibility to next in chain"() {

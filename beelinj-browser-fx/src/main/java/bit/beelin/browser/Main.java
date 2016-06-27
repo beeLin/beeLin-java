@@ -21,7 +21,7 @@ public class Main extends Application {
     private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     private static final String appName = "beeLīn";
-    private static final String startPage = "http://okturtles.bit";
+    private static final String startPage = "http://msgilligan.bit";
 
     private MacMenuBar macMenuBar;
 
@@ -34,10 +34,14 @@ public class Main extends Application {
         log.info("init()");
 
         // Configure Java to first search our Namecoin NameService provider, then fall back to the default
-        // TODO: Add a preference setting to switch between DNSChain and Namecoin RPC for lookup
-        System.setProperty("sun.net.spi.nameservice.provider.1", "namecoin-dnschain,beelin");
+        System.setProperty("sun.net.spi.nameservice.provider.1", "beelin-switchable,beelin");
+//        System.setProperty("sun.net.spi.nameservice.provider.1", "namecoin-dnschain,beelin");
 //        System.setProperty("sun.net.spi.nameservice.provider.1", "namecoin-rpc,beelin");
         System.setProperty("sun.net.spi.nameservice.provider.2", "default");
+
+        // TODO: Add a preference setting and connect to BeelinSwitchableNameService class
+        // to switch between DNSChain and Namecoin RPC or others for lookup
+
     }
 
     @Override
@@ -57,7 +61,7 @@ public class Main extends Application {
         bp.setCenter(webView);
         WebEngine engine = webView.getEngine();
         engine.setOnError(e -> {
-            log.info("Error: {}", e.getMessage());
+            log.error("Error: {}", e.getMessage());
         });
         engine.load(startPage);
         Worker loadWorker = engine.getLoadWorker();

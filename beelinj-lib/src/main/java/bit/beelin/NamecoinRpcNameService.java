@@ -34,11 +34,13 @@ import java.util.Map;
  */
 public class NamecoinRpcNameService extends NamecoinNameService {
     private static final Logger log = LoggerFactory.getLogger(DNSChainNameService.class);
-    public static String rpcName = "msgnmc";
-    public static String rpcPassword = "msgnmc2015";
     private NamecoinClient namecoinClient;
 
     public NamecoinRpcNameService() {
+        namecoinClient = new NamecoinClient(NamecoinClient.readConfig());
+    }
+
+    public NamecoinRpcNameService(String rpcName, String rpcPassword) {
         URI server = null;
         try {
             server = new URI("http://localhost:8336");
@@ -55,9 +57,11 @@ public class NamecoinRpcNameService extends NamecoinNameService {
         try {
             result = namecoinClient.nameShow("d/" + domain);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("IOException: {}", e);
+            throw new RuntimeException(e);
         } catch (JsonRPCStatusException e) {
-            e.printStackTrace();
+            log.error("JsonRPCStatusException: {}", e);
+            throw new RuntimeException(e);
         }
         NamecoinValue data = new NamecoinValue(result.getValue());
         InetAddress[] addresses = data.getAddresses();

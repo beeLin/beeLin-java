@@ -4,7 +4,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.google.guava:guava:18.0'
     compile 'commons-codec:commons-codec:1.10'
-    compile 'com.msgilligan:bitcoinj-rpcclient:0.0.11'
+    compile 'com.msgilligan:bitcoinj-rpcclient:0.1.1'
 }
 
 sourceCompatibility = 1.7
