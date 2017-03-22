@@ -1,13 +1,14 @@
 package bit.beelin;
 
-import com.squareup.okhttp.CertificatePinner;
-import com.squareup.okhttp.OkHttpClient;
-import retrofit.Call;
-import retrofit.Response;
-import retrofit.Retrofit;
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.JacksonConverterFactory;
+import okhttp3.OkHttpClient;
+import okhttp3.CertificatePinner;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -76,15 +77,27 @@ public class DNSChainClient {
     }
 
     private OkHttpClient initClient() {
-        OkHttpClient client = new OkHttpClient();
-        client.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-        client.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-        client.setCertificatePinner(
-                new CertificatePinner.Builder()
-                        // Pinning for DNSChain API Server -- is this right?
-                        .add("api.dnschain.net", "sha1/OmfEeJ94QcdL+YrCl2bMp6Zh9LI=")
-                        .add("api.dnschain.net", "sha1/KqqJgAYLy9ogXOWETcR36ioKf20=")
-                        .build());
-        return client;
+        boolean debug = false;
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .connectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
+                .readTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+
+        if (debug) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(interceptor);
+        }
+
+        // TODO: Enable cert pinning?
+//        CertificatePinner pinner =  new CertificatePinner.Builder()
+//                        // Pinning for DNSChain API Server -- is this right?
+//                        .add("api.dnschain.net", "sha1/OmfEeJ94QcdL+YrCl2bMp6Zh9LI=")
+//                        .add("api.dnschain.net", "sha1/KqqJgAYLy9ogXOWETcR36ioKf20=")
+//                        .build();
+
+        return builder
+                //.certificatePinner(pinner)
+                .build();
     }
 }

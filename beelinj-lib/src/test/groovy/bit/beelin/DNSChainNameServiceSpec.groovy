@@ -11,13 +11,23 @@ import java.net.UnknownHostException;
 class DNSChainNameServiceSpec extends Specification {
     @Shared DNSChainNameService service
 
-    def "can lookup .bit hostnames"() {
+    def "can lookup .bit hostname"() {
+        when:
+        InetAddress[] ip = service.lookupAllHostAddr("msgilligan.bit")
+
+        then:
+        ip.length == 1
+        ip[0] == InetAddress.getByName("207.111.216.146")
+    }
+
+    def "okturtles.bit throws Exception"() {
         when:
         InetAddress[] ip = service.lookupAllHostAddr("okturtles.bit")
 
         then:
-        ip.length == 1
-        ip[0] == InetAddress.getByName("192.184.93.146")
+        Exception e = thrown()
+        //ip.length == 1
+        //ip[0] == InetAddress.getByName("192.184.93.146")
     }
 
     def "throws exception when not a .bit domain, passing responsibility to next in chain"() {

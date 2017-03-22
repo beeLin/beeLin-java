@@ -1,7 +1,8 @@
 dependencies {
-    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
-    compile 'com.squareup.retrofit:converter-jackson:2.0.0-beta2'
-    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.squareup.retrofit2:retrofit:2.0.1'
+    compile 'com.squareup.retrofit2:converter-jackson:2.0.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
+    //compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.google.guava:guava:18.0'
     compile 'commons-codec:commons-codec:1.10'
     compile 'com.msgilligan:bitcoinj-rpcclient:0.1.1'
